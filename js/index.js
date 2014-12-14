@@ -30,11 +30,15 @@ function doubleDigit(a) {
   }
 }
 
+function alertDummy(){
+  
+}
+
 function messaggio( tit, testo, btn){
   if ( CORDOVA ) {
     navigator.notification.alert(
       testo,
-      function(){},
+      alertDummy,
       tit,
       btn
       );
