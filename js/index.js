@@ -81,7 +81,13 @@ app.entra= function (){
   //$( '#popupLogin' ).popup( 'close' )
   var utente = $('#un').val().toLowerCase();
   if (utente.length<4) {
-    alert("Attenzione: il nome deve essere almeno di quattro caratteri")
+    console.log('Nome troppo corto');
+    navigator.notification.alert(
+      'Il nome deve essere almeno di quattro caratteri',
+      function(){},
+      'Attenzione!',
+      'ok'
+      );
     exit;
   }
   app.nome = utente; 
@@ -96,7 +102,13 @@ app.entra= function (){
   }).done(function(result) {
     app.id_user = result;
   }).fail(function(){
-    alert("Problemi di conenssione");
+    console.log('Problemi di conenssione');
+    navigator.notification.alert(
+      'Problema di connessione',
+      function(){},
+      'Attenzione!',
+      'ok'
+      );
   });
   mappa.leggiDati();
   $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
@@ -185,12 +197,24 @@ app.chek_answer = function(){
   // alert(id);
   // alert(mappa.luoghi[id].risposta_enigma);
   if ( risposta == mappa.luoghi[id].risposta_enigma) {
-    alert("BRAVO! Hai risorto l'enigma di "+ mappa.luoghi[id].descrizione);
+    console.log("BRAVO! Hai risorto l'enigma di "+ mappa.luoghi[id].descrizione);
+    navigator.notification.alert(
+      "Hai risolto l'enigma di "+ mappa.luoghi[id].descrizione,
+      function(){},
+      "Bravo",
+      "Ok"
+      );
     mappa.luoghi[id].risolto = 1;
     $('#form_arcano').hide();
     mappa.scriviDati();
   } else {
-    alert("sbagliato, mi dispiace. Riprova!");
+    console.log("sbagliato, mi dispiace. Riprova!");
+    navigator.notification.alert(
+      "sbagliato, mi dispiace. Riprova!",
+      function(){},
+      "Attenzione!",
+      "ok"
+      );
   }
 }
 // classe con i luoghi e la mappa
@@ -222,7 +246,13 @@ var mappa = {
           //alert(mappa.luoghi[i].descrizione);
         })
       }).fail(function(){
-        alert("Problemi di conenssione");
+        console.log("Problemi di conenssione");
+        navigator.notification.alert(
+          "Problemi di conenssione",
+          function(){},
+          "Attenzione!",
+          "Ok"
+          );
       })
       
   },
@@ -240,7 +270,13 @@ var mappa = {
         },
       cache: false
     }).fail(function(){
-      alert("Problemi di conenssione");
+        console.log("Problemi di conenssione");
+        navigator.notification.alert(
+          "Problemi di conenssione",
+          function(){},
+          "Attenzione!",
+          "Ok"
+          );
     })
     // alert(arr);  
   },
@@ -261,6 +297,7 @@ var mappa = {
     var marker = new google.maps.Marker({
       position: latlng,
       map: map,
+      icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-pushpin.png',
       title: "Your're here!"
     });
     $.each(mappa.luoghi, function(key, value){
@@ -358,8 +395,13 @@ mappa.onSuccessGeo = function(position){
 }
 // chiamata quando c'è un errore nella lettura della posizione
 mappa.onErrorGeo = function(error) {
-  alert('code: '    + error.code    + '\n' +
-        'message: ' + error.message + '\n');
+  console.log("Problemi di conenssione");
+  navigator.notification.alert(
+    'code: '    + error.code    + '\n' + 'message: ' + error.message + '\n',
+    function(){},
+    "Attenzione!",
+    "Ok"
+    );
 }
 
 $(document).ready(function() {
