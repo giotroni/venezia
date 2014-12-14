@@ -1,3 +1,4 @@
+var CORDOVA= false;
 // calcolo della distanza
 function getDistanceFromLatLng(lat1,lng1,lat2,lng2) {
   var R = 6371; // Radius of the earth in km
@@ -29,6 +30,18 @@ function doubleDigit(a) {
   }
 }
 
+function messaggio( tit, testo, btn){
+  if ( CORDOVA ) {
+    navigator.notification.alert(
+      testo,
+      function(){},
+      tit,
+      btn
+      );
+  } else {
+    console.log(tit + ' ' + testo);      
+  }  
+}
 // MAIN
 var app = {
     id_user : 0,
@@ -38,7 +51,9 @@ var app = {
     },
      
     bind: function() {
-        document.addEventListener('deviceready', this.deviceready, false);
+        if ( CORDOVA) {
+          document.addEventListener('deviceready', this.deviceready, false);
+        }
         // alert("ok");
         $("#page-home").on("tap", app.intro);
         $("#popupIntro").on("tap", app.introClose);
@@ -81,19 +96,13 @@ app.entra= function (){
   //$( '#popupLogin' ).popup( 'close' )
   var utente = $('#un').val().toLowerCase();
   if (utente.length<4) {
-    console.log('Nome troppo corto');
-    navigator.notification.alert(
-      'Il nome deve essere almeno di quattro caratteri',
-      function(){},
-      'Attenzione!',
-      'ok'
-      );
-    exit;
+    messaggio('Attenzione!', 'Nome troppo corto', 'Ok')
+    return;
   }
   app.nome = utente; 
   $.ajax({
     type: 'GET',
-    url: 'http://www.troni.it/venezia/php/leggi_user.php',
+    url: URL_PREFIX +'php/leggi_user.php',
     async: false,
     data: {
       user: utente
@@ -102,13 +111,7 @@ app.entra= function (){
   }).done(function(result) {
     app.id_user = result;
   }).fail(function(){
-    console.log('Problemi di conenssione');
-    navigator.notification.alert(
-      'Problema di connessione',
-      function(){},
-      'Attenzione!',
-      'ok'
-      );
+    messaggio('Attenzione!', 'Problema di connessione', 'Ok')
   });
   mappa.leggiDati();
   $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
@@ -197,24 +200,12 @@ app.chek_answer = function(){
   // alert(id);
   // alert(mappa.luoghi[id].risposta_enigma);
   if ( risposta == mappa.luoghi[id].risposta_enigma) {
-    console.log("BRAVO! Hai risorto l'enigma di "+ mappa.luoghi[id].descrizione);
-    navigator.notification.alert(
-      "Hai risolto l'enigma di "+ mappa.luoghi[id].descrizione,
-      function(){},
-      "Bravo",
-      "Ok"
-      );
+    messaggio("Bravo", "Hai risorto l'enigma di "+ mappa.luoghi[id].descrizione, "Ok")
     mappa.luoghi[id].risolto = 1;
     $('#form_arcano').hide();
     mappa.scriviDati();
   } else {
-    console.log("sbagliato, mi dispiace. Riprova!");
-    navigator.notification.alert(
-      "sbagliato, mi dispiace. Riprova!",
-      function(){},
-      "Attenzione!",
-      "ok"
-      );
+    messaggio("Sbagliato!", "mi dispiace. Riprova!", "Ok");
   }
 }
 // classe con i luoghi e la mappa
@@ -232,7 +223,7 @@ var mappa = {
       };
       $.ajax({
         type: 'GET',
-        url: 'http://www.troni.it/venezia/php/leggi_luoghi.php',
+        url: URL_PREFIX + 'php/leggi_luoghi.php',
         async: false,
         data: {
           tipo: 'maggiore',
@@ -246,13 +237,7 @@ var mappa = {
           //alert(mappa.luoghi[i].descrizione);
         })
       }).fail(function(){
-        console.log("Problemi di conenssione");
-        navigator.notification.alert(
-          "Problemi di conenssione",
-          function(){},
-          "Attenzione!",
-          "Ok"
-          );
+        messaggio("Attenzione!","Problemi di conenssione", "Ok");
       })
       
   },
@@ -261,7 +246,7 @@ var mappa = {
     var arr = JSON.stringify(mappa.luoghi);
     $.ajax({
       type: 'GET',
-      url: 'http://www.troni.it/venezia/php/scrivi_dati.php',
+      url: URL_PREFIX + 'php/scrivi_dati.php',
       async: false,
       data: {
         tipo: 'maggiore',
@@ -270,13 +255,7 @@ var mappa = {
         },
       cache: false
     }).fail(function(){
-        console.log("Problemi di conenssione");
-        navigator.notification.alert(
-          "Problemi di conenssione",
-          function(){},
-          "Attenzione!",
-          "Ok"
-          );
+        messaggio("Attenzione!","Problemi di conenssione", "Ok");
     })
     // alert(arr);  
   },
@@ -395,15 +374,14 @@ mappa.onSuccessGeo = function(position){
 }
 // chiamata quando c'è un errore nella lettura della posizione
 mappa.onErrorGeo = function(error) {
-  console.log("Problemi di conenssione");
-  navigator.notification.alert(
-    'code: '    + error.code    + '\n' + 'message: ' + error.message + '\n',
-    function(){},
-    "Attenzione!",
-    "Ok"
-    );
+  messaggio("Attenzione!","Problemi di conenssione", "Ok");
 }
 
 $(document).ready(function() {
     app.initialize();
+    if ( CORDOVA ) {
+      URL_PREFIX = "http://www.troni.it/venezia/";
+    } else {
+      URL_PREFIX = "";
+    }
 });
