@@ -1,0 +1,122 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <title>Venice's secrets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7uaEdJNrfDU4RHjgtPg971Fm8pHzZ3o">
+    </script>
+
+    <script type="text/javascript" src="js/index.js"></script>
+    <style>
+        .copertina {
+            	background: FireBrick url("img/maschera1.jpg") no-repeat fixed center;
+                background-size: 100% 100%;
+        }
+        .interno {
+            	background: Gainsboro url("img/interno3.png") no-repeat fixed center;
+                background-size: 100% 100%;
+        }
+	.center-wrapper{
+	text-align: center;
+	}
+	.center-wrapper * {
+	margin: 0 auto;
+	}
+        #page-map, #map-canvas { width: 100%; height: 100%; padding: 0; }
+
+    </style>
+</head>
+
+<body>
+    <div data-role="page" id="page-home" class="copertina">
+        <div data-role="header">
+            <h2>Casanova's secrets</h2>
+        </div>
+        <div role="main" class="ui-content" id="content-home">
+	    <div data-role="popup" style="background: linear-gradient(grey, lavender);" id="popupIntro" data-transition="slidedown" >
+		<h3>Casanova, esiliato a Parigi, dopo la sua fuga dai piombi di Palazzo Ducale, riceve una visita da parte di un importante emissario del governo della Serenissima.<br>
+	    Serve il suo aiuto!<br>
+	    Una setta segreta, al soldo di una potenza straniera, sta tramando contro il governo.<br>
+	    Per sventare la cospirazione &egrave necessario trovare il codice segreto con il quale decrittare i messaggi<br>
+	    Per proteggersi, gli astuti cospiratori hanno diviso il codice in piccoli pezzi, detti gli Arcani, in vari posti della citt&agrave, ma nessuno &egrave ancora riuscito a scoprirli tutti.<br>
+	    Il tempo stringe, per cui il Doge ha deciso di chiedere a Casanova un aiuto, se riuscir&egrave a svelare il mistero, potr&agrave tornare alla sua amata Venezia
+		</h3>
+	    </div>
+	    <div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all">
+		<div style="padding:10px 20px;">
+		    <h3>Inserisci il tuo username</h3>
+		    <label for="un" class="ui-hidden-accessible">Username:</label>
+		    <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a" />	    
+		    <button id="btnEntra" data-theme="b" data-icon="check">Ok</button>
+		</div>
+	    </div>
+	    
+        </div>
+        <div data-role="footer" data-position="fixed">
+	    <button id="btnLogin" data-theme="b" >Entra</button>
+        </div>
+
+    </div><!-- /page-home -->
+    
+    <div data-role="page" id="page-interno" data-add-back-btn="false"  class="interno">
+        <div data-role="header" id="tit-interno">
+            <h2>Gli Arcani</h2>
+        </div>
+        <div role="main" class="ui-content" id="content-interno">
+	    <div id="punti"></div>            
+	    <button id="btnPosition">Aggiorna Posizione</button>            
+            <ul data-role="listview" data-inset="true" id="lstPlaces">
+            </ul>            
+            
+	    <button id="btnMap">Mappa</button>            
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <a href="#page-home" data-role="button" data-icon="arrow-l">Prec</a>
+        </div>
+    </div><!-- /page-interno -->
+    <div data-role="page" id="page-arcano">
+        <div data-role="header" id="tit-arcano">
+            <h2>Gli Arcani:</h2>
+        </div>
+	<div id="id_arcano" valore="0" class="center-wrapper"></div>
+	<div id="form_arcano">
+	    <div id="testo_enigma" ></div>
+	    <div class="ui-field-contain" >
+		<label for="input_enigma">Inserisci la risposta:</label>
+		<input name="input_enigma" id="input_enigma" value="" type="text">
+		<label for="btn_enigma">:</label>
+		<button class="ui-btn ui-shadow" name="btn_enigma" id="btn_enigma" >Invia risposta</button>
+	    </div>
+	</div>
+
+	<div class="center-wrapper">
+	    <img src="" id="posto_img" />
+	</div>
+	
+        <div role="main" class="ui-content" id="content-arcano">
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <a href="#page-interno" data-role="button" data-icon="arrow-l" >Prec</a>
+        </div>
+    </div><!-- /page-arcano -->
+    
+    <div data-url="map-page" data-role="page" id="page-map">
+        <div data-role="header" data-theme="a">
+	    <h2>Maps</h2>
+        </div>
+        <div role="main" class="ui-content" id="map-canvas">
+            <!-- map loads here... -->
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-right ui-icon-arrow-r" id="btnNext">Prev</a>
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <a href="#page-interno" data-role="button" data-icon="arrow-l" id="btnLst">Prec</a>
+        </div>
+    </div>
+</body>
+</html>
