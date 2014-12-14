@@ -1,4 +1,4 @@
-var CORDOVA= false;
+var CORDOVA= true;
 // calcolo della distanza
 function getDistanceFromLatLng(lat1,lng1,lat2,lng2) {
   var R = 6371; // Radius of the earth in km
