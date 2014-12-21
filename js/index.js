@@ -52,7 +52,7 @@ function messaggio( tit, testo, btn){
 // MAIN
 var app = {
     storage: window.localStorage,   // per il salvataggio locale delle info
-    user_data: {nome: "", id_user: "0"},
+    user_data: {nome: "gigio", id_user: "1"},
     initialize: function() {
         this.bind();
     },
@@ -396,6 +396,7 @@ mappa.onErrorGeo = function(error) {
 
 $(document).ready(function() {
     app.initialize();
+    alert("prova");
     if ( CORDOVA ) {
       URL_PREFIX = "http://www.troni.it/venezia/";
         var value = app.storage.getItem("user");
