@@ -52,7 +52,7 @@ function messaggio( tit, testo, btn){
 // MAIN
 var app = {
     storage: window.localStorage,   // per il salvataggio locale delle info
-    user_data: {nome: "gigio", id_user: "1"},
+    user_data: {nome: "gigio", id_user: "0"},
     initialize: function() {
         this.bind();
     },
