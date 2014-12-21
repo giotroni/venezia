@@ -1,5 +1,9 @@
 // v0.1
 var CORDOVA= true;
+// git remote add origin https://github.com/giotroni/venezia.git
+// git add .
+// git commit -m "memorizzazione locale"
+// git push origin master
 // calcolo della distanza
 function getDistanceFromLatLng(lat1,lng1,lat2,lng2) {
   var R = 6371; // Radius of the earth in km
@@ -48,7 +52,7 @@ function messaggio( tit, testo, btn){
 // MAIN
 var app = {
     storage: window.localStorage,   // per il salvataggio locale delle info
-    user_data: {nome: "", id_user: 0},
+    user_data: {nome: "", id_user: "0"},
     initialize: function() {
         this.bind();
     },
@@ -91,7 +95,7 @@ app.introClose= function (){
 }
 
 app.login= function (){
-  if ( app.user_data.id_user== 0) {
+  if ( app.user_data.id_user=="0") {
     // non è stato ancora impostato alcun utente
     $( '#popupLogin' ).popup( 'open' )
   } else {
@@ -395,8 +399,11 @@ $(document).ready(function() {
     if ( CORDOVA ) {
       URL_PREFIX = "http://www.troni.it/venezia/";
         var value = app.storage.getItem("user");
-        app.user_data = JSON.parse(value);
-        alert(app.user_data);
+        alert(value);
+        if (!value) {
+          app.user_data = JSON.parse(value);
+        }
+
     } else {
       URL_PREFIX = "";
     }
