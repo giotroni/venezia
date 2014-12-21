@@ -1,3 +1,4 @@
+// v0.1
 var CORDOVA= true;
 // calcolo della distanza
 function getDistanceFromLatLng(lat1,lng1,lat2,lng2) {
@@ -46,8 +47,8 @@ function messaggio( tit, testo, btn){
 }
 // MAIN
 var app = {
-    id_user : 0,
-    nome: "",
+    storage: window.localStorage,   // per il salvataggio locale delle info
+    user_data: {nome: "", id_user: 0},
     initialize: function() {
         this.bind();
     },
@@ -90,7 +91,12 @@ app.introClose= function (){
 }
 
 app.login= function (){
-  $( '#popupLogin' ).popup( 'open' )
+  if ( app.user_data.id_user== 0) {
+    // non è stato ancora impostato alcun utente
+    $( '#popupLogin' ).popup( 'open' )
+  } else {
+      app.entra_pagina();
+  }
 }
 // 
 app.entra= function (){
@@ -101,7 +107,7 @@ app.entra= function (){
     messaggio('Attenzione!', 'Nome troppo corto', 'Ok')
     return;
   }
-  app.nome = utente; 
+  app.user_data.nome = utente; 
   $.ajax({
     type: 'GET',
     url: URL_PREFIX +'php/leggi_user.php',
@@ -111,10 +117,15 @@ app.entra= function (){
       },
     cache: false
   }).done(function(result) {
-    app.id_user = result;
+    app.user_data.id_user = result;
+    app.storage.setItem("user", JSON.stringify(app.user_data.data));
   }).fail(function(){
     messaggio('Attenzione!', 'Problema di connessione', 'Ok')
   });
+  app.entra_pagina();
+}
+
+app.entra_pagina = function (){
   mappa.leggiDati();
   $.mobile.pageContainer.pagecontainer("change", "#page-interno", {
       transition: 'slide',
@@ -125,7 +136,7 @@ app.entra= function (){
   // mette in ordine i luoghi sulla base della distanza dal punto attuale
   mappa.sortPlaces();
   // aggiorna la lista dei luoghi
-  mappa.lstPlacesUpdate();
+  mappa.lstPlacesUpdate();  
 }
 // ritorna alla copertina    
 app.torna_copertina= function (){
@@ -229,7 +240,7 @@ var mappa = {
         async: false,
         data: {
           tipo: 'maggiore',
-          user: app.id_user
+          user: app.user_data.id_user
           },
         cache: false
       }).done(function(result) {
@@ -331,7 +342,7 @@ var mappa = {
       });
     })
     $('#lstPlaces').listview("refresh");
-    $('#punti').html("Caro <b>"+app.nome+"</b>, hai trovato "+num_arcani+" Arcani, risolto "+num_risolti+" enigmi, per un totale di <b>"+punti+" punti</b>")
+    $('#punti').html("Caro <b>"+app.user_data.nome+"</b>, hai trovato "+num_arcani+" Arcani, risolto "+num_risolti+" enigmi, per un totale di <b>"+punti+" punti</b>")
   },
   // verifica se è arrivato in un posto
   checkArrivato: function(){
@@ -383,6 +394,9 @@ $(document).ready(function() {
     app.initialize();
     if ( CORDOVA ) {
       URL_PREFIX = "http://www.troni.it/venezia/";
+        var value = app.storage.getItem("user");
+        app.user_data = JSON.parse(value);
+        alert(app.user_data);
     } else {
       URL_PREFIX = "";
     }
