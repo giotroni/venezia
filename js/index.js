@@ -95,11 +95,11 @@ app.introClose= function (){
 }
 
 app.login= function (){
-  if ( app.user_data.id_user=="0") {
+  if ( app.user_data.id_user>"0") {
+    app.entra_pagina();
+  } else {
     // non è stato ancora impostato alcun utente
     $( '#popupLogin' ).popup( 'open' )
-  } else {
-      app.entra_pagina();
   }
 }
 // 
@@ -399,9 +399,12 @@ $(document).ready(function() {
     if ( CORDOVA ) {
       URL_PREFIX = "http://www.troni.it/venezia/";
         var value = app.storage.getItem("user");
-        alert(value);
         if (!value) {
           app.user_data = JSON.parse(value);
+          alert(app.user_data);
+          $("#nome").html(app.user.data.nome)
+        } else {
+          alert("Non valido");
         }
 
     } else {
