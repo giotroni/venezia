@@ -396,16 +396,16 @@ mappa.onErrorGeo = function(error) {
 
 $(document).ready(function() {
     app.initialize();
-    alert("prova");
     if ( CORDOVA ) {
+      alert("prova");
       URL_PREFIX = "http://www.troni.it/venezia/";
         var value = app.storage.getItem("user");
-        if (!value) {
+        if (value === null) {
+          alert("Non valido");
+        } else {
           app.user_data = JSON.parse(value);
           alert(app.user_data);
           $("#nome").html(app.user.data.nome)
-        } else {
-          alert("Non valido");
         }
 
     } else {
