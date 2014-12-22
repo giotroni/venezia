@@ -85,21 +85,6 @@ var app = {
     },
  
     start: function() {
-      if ( CORDOVA ) {
-        alert("prova");
-        URL_PREFIX = "http://www.troni.it/venezia/";
-          var value = app.storage.getItem("user");
-          if (value === null) {
-            alert("Non valido");
-          } else {
-            app.user_data = JSON.parse(value);
-            alert(app.user_data);
-            $("#nome").html(app.user.data.nome)
-          }
-  
-      } else {
-        URL_PREFIX = "";
-      }
 
     }
 }
@@ -412,4 +397,20 @@ mappa.onErrorGeo = function(error) {
 
 $(document).ready(function() {
     app.initialize();
+      if ( CORDOVA ) {
+        alert("prova");
+        URL_PREFIX = "http://www.troni.it/venezia/";
+          var value = app.storage.getItem("user");
+          if (value === null) {
+            alert("Non valido");
+          } else {
+            app.user_data = JSON.parse(value);
+            alert(app.user_data);
+            $("#nome").html(app.user.data.nome)
+          }
+  
+      } else {
+        URL_PREFIX = "";
+      }
+
 });
