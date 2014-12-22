@@ -52,7 +52,7 @@ function messaggio( tit, testo, btn){
 // MAIN
 var app = {
     storage: window.localStorage,   // per il salvataggio locale delle info
-    user_data: {nome: "gigio", id: "0"},
+    user_data: {nome: "zero", id: 0},
     initialize: function() {
         this.bind();
     },
@@ -126,7 +126,7 @@ app.entra= function (){
     app.user_data.id = result;
     app.storage.setItem("user", JSON.stringify(app.user_data));
     $("#nome").html(app.user.data.nome);
-    alert(app.user_data.nome + " " + app.user_data.id);
+    //alert(app.user_data.nome + " " + app.user_data.id);
   }).fail(function(){
     messaggio('Attenzione!', 'Problema di connessione', 'Ok')
   });
@@ -144,7 +144,8 @@ app.entra_pagina = function (){
   // mette in ordine i luoghi sulla base della distanza dal punto attuale
   mappa.sortPlaces();
   // aggiorna la lista dei luoghi
-  mappa.lstPlacesUpdate();  
+  mappa.lstPlacesUpdate();
+  alert(app.user_data.nome + " " + app.user_data.id);
 }
 // ritorna alla copertina    
 app.torna_copertina= function (){
@@ -408,7 +409,7 @@ $(document).ready(function() {
             alert("Non valido");
           } else {
             app.user_data = JSON.parse(value);
-            alert(app.user_data);
+            alert(app.user_data.nome + " " + app.user_data.id);
             $("#nome").html(app.user.data.nome)
           }
   
