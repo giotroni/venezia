@@ -107,6 +107,7 @@ app.introClose= function (){
 }
 
 app.login= function (){
+  app.checkConnection();
   alert(app.user_data.nome + " " + app.user_data.id);
   if ( app.user_data.nome!="") {
     app.entra_pagina();
@@ -240,6 +241,21 @@ app.chek_answer = function(){
     messaggio("Sbagliato!", "mi dispiace. Riprova!", "Ok");
   }
 }
+
+app.checkConnection = function() {
+  var networkState = navigator.network.connection.type;
+  var states = {};
+  states[Connection.UNKNOWN]  = 'Unknown connection';
+  states[Connection.ETHERNET] = 'Ethernet connection';
+  states[Connection.WIFI]     = 'WiFi connection';
+  states[Connection.CELL_2G]  = 'Cell 2G connection';
+  states[Connection.CELL_3G]  = 'Cell 3G connection';
+  states[Connection.CELL_4G]  = 'Cell 4G connection';
+  states[Connection.NONE]     = 'No network connection';
+  alert('Connection type: ' + states[networkState]);
+}
+
+
 // classe con i luoghi e la mappa
 var mappa = {
   // distanza entro cui si settta il posto come visitato
@@ -411,24 +427,11 @@ mappa.onErrorGeo = function(error) {
   messaggio("Attenzione!","Problemi di conenssione", "Ok");
 }
 
-function checkConnection() {
-  var networkState = navigator.network.connection.type;
-  var states = {};
-  states[Connection.UNKNOWN]  = 'Unknown connection';
-  states[Connection.ETHERNET] = 'Ethernet connection';
-  states[Connection.WIFI]     = 'WiFi connection';
-  states[Connection.CELL_2G]  = 'Cell 2G connection';
-  states[Connection.CELL_3G]  = 'Cell 3G connection';
-  states[Connection.CELL_4G]  = 'Cell 4G connection';
-  states[Connection.NONE]     = 'No network connection';
-  alert('Connection type: ' + states[networkState]);
-}
 
 
 $(document).ready(function() {
     app.initialize();
       if ( CORDOVA ) {
-        alert("prova");
         URL_PREFIX = "http://www.troni.it/venezia/";
           var value = app.storage.getItem("user");
           if (value === null) {
@@ -438,7 +441,7 @@ $(document).ready(function() {
             alert(app.user_data.nome + " " + app.user_data.id);
             $("#nome").html(app.user.data.nome)
           }
-        checkConnection();  
+         
       } else {
         URL_PREFIX = "";
       }
