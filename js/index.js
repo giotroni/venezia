@@ -52,7 +52,7 @@ function messaggio( tit, testo, btn){
 // MAIN
 var app = {
     storage: window.localStorage,   // per il salvataggio locale delle info
-    user_data: {nome: "zero", id: 0},
+    user_data: {nome: "", id: 0},
     initialize: function() {
         this.bind();
     },
@@ -97,7 +97,7 @@ app.introClose= function (){
 
 app.login= function (){
   alert(app.user_data.nome + " " + app.user_data.id);
-  if ( app.user_data.id>"0") {
+  if ( app.user_data.nome!="") {
     app.entra_pagina();
   } else {
     // non è stato ancora impostato alcun utente
@@ -123,9 +123,8 @@ app.entra= function (){
       },
     cache: false
   }).done(function(result) {
-    app.user_data.id = result;
+    app.user_data.id = result*1;
     app.storage.setItem("user", JSON.stringify(app.user_data));
-    $("#nome").html(app.user.data.nome);
     //alert(app.user_data.nome + " " + app.user_data.id);
   }).fail(function(){
     messaggio('Attenzione!', 'Problema di connessione', 'Ok')
