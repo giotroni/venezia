@@ -76,7 +76,6 @@ var app = {
         if ( CORDOVA) {
           document.addEventListener('deviceready', this.deviceready, false);
         }
-        attesa(true);
         // alert("ok");
         $("#page-home").on("tap", app.intro);
         $("#popupIntro").on("tap", app.introClose);
@@ -100,7 +99,6 @@ var app = {
         
     },
      function checkConnection() {
-        attesa(false);
         var networkState = navigator.network.connection.type;
         var states = {};
         states[Connection.UNKNOWN]  = 'Unknown connection';
@@ -308,6 +306,7 @@ var mappa = {
   // funzione che inizializza i dati
   // funzione che legge la posizione attuale
   getPos: function(){
+    attesa(true);
     navigator.geolocation.getCurrentPosition(mappa.onSuccessGeo, mappa.onErrorGeo, { timeout: 30000 });    
   },
   // funzione che disegna la mappa
@@ -413,6 +412,7 @@ var mappa = {
 }
 // chiamata quando la posizione è stata letta
 mappa.onSuccessGeo = function(position){
+  attesa(false);
   mappa.defaultLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   mappa.sortPlaces();
   mappa.checkArrivato();
@@ -424,7 +424,6 @@ mappa.onErrorGeo = function(error) {
 }
 
 $(document).ready(function() {
-
     app.initialize();
       if ( CORDOVA ) {
         alert("prova");
