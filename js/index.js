@@ -52,7 +52,7 @@ function messaggio( tit, testo, btn){
 // MAIN
 var app = {
     storage: window.localStorage,   // per il salvataggio locale delle info
-    user_data: {nome: "gigio", id_user: "0"},
+    user_data: {nome: "gigio", id: "0"},
     initialize: function() {
         this.bind();
     },
@@ -85,6 +85,22 @@ var app = {
     },
  
     start: function() {
+      if ( CORDOVA ) {
+        alert("prova");
+        URL_PREFIX = "http://www.troni.it/venezia/";
+          var value = app.storage.getItem("user");
+          if (value === null) {
+            alert("Non valido");
+          } else {
+            app.user_data = JSON.parse(value);
+            alert(app.user_data);
+            $("#nome").html(app.user.data.nome)
+          }
+  
+      } else {
+        URL_PREFIX = "";
+      }
+
     }
 }
 app.intro= function (){
@@ -95,7 +111,7 @@ app.introClose= function (){
 }
 
 app.login= function (){
-  if ( app.user_data.id_user>"0") {
+  if ( app.user_data.id>"0") {
     app.entra_pagina();
   } else {
     // non è stato ancora impostato alcun utente
@@ -121,8 +137,8 @@ app.entra= function (){
       },
     cache: false
   }).done(function(result) {
-    app.user_data.id_user = result;
-    app.storage.setItem("user", JSON.stringify(app.user_data.data));
+    app.user_data.id = result;
+    app.storage.setItem("user", JSON.stringify(app.user_data));
   }).fail(function(){
     messaggio('Attenzione!', 'Problema di connessione', 'Ok')
   });
@@ -244,7 +260,7 @@ var mappa = {
         async: false,
         data: {
           tipo: 'maggiore',
-          user: app.user_data.id_user
+          user: app.user_data.id
           },
         cache: false
       }).done(function(result) {
@@ -396,19 +412,4 @@ mappa.onErrorGeo = function(error) {
 
 $(document).ready(function() {
     app.initialize();
-    if ( CORDOVA ) {
-      alert("prova");
-      URL_PREFIX = "http://www.troni.it/venezia/";
-        var value = app.storage.getItem("user");
-        if (value === null) {
-          alert("Non valido");
-        } else {
-          app.user_data = JSON.parse(value);
-          alert(app.user_data);
-          $("#nome").html(app.user.data.nome)
-        }
-
-    } else {
-      URL_PREFIX = "";
-    }
 });
