@@ -96,7 +96,7 @@ app.introClose= function (){
 }
 
 app.login= function (){
-  alert(app.user_data);
+  alert(app.user_data.nome + " " + app.user_data.id);
   if ( app.user_data.id>"0") {
     app.entra_pagina();
   } else {
@@ -125,7 +125,8 @@ app.entra= function (){
   }).done(function(result) {
     app.user_data.id = result;
     app.storage.setItem("user", JSON.stringify(app.user_data));
-    $("#nome").html(app.user.data.nome)
+    $("#nome").html(app.user.data.nome);
+    alert(app.user_data.nome + " " + app.user_data.id);
   }).fail(function(){
     messaggio('Attenzione!', 'Problema di connessione', 'Ok')
   });
