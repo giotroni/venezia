@@ -98,7 +98,7 @@ var app = {
         checkConnection();
         
     },
-     function checkConnection() {
+      checkConnection: function() {
         var networkState = navigator.network.connection.type;
         var states = {};
         states[Connection.UNKNOWN]  = 'Unknown connection';
