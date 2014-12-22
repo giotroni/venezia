@@ -49,18 +49,34 @@ function messaggio( tit, testo, btn){
     console.log(tit + ' ' + testo);      
   }  
 }
+
+function attesa(valore){
+  if (valore) {
+    $.mobile.loading( "show", {
+            text: "Attendere...",
+            textVisible: true,
+            theme: 'z',
+            textonly: false,
+            html: ""
+    });
+  } else {
+    $.mobile.loading( "hide" );
+  }
+}
+
 // MAIN
 var app = {
     storage: window.localStorage,   // per il salvataggio locale delle info
     user_data: {nome: "", id: 0},
     initialize: function() {
-        this.bind();
+      this.bind();
     },
      
     bind: function() {
         if ( CORDOVA) {
           document.addEventListener('deviceready', this.deviceready, false);
         }
+        attesa(true);
         // alert("ok");
         $("#page-home").on("tap", app.intro);
         $("#popupIntro").on("tap", app.introClose);
@@ -80,12 +96,21 @@ var app = {
     },
      
     deviceready: function() {
-        app.start();
+        checkConnection();
         
     },
- 
-    start: function() {
-
+     function checkConnection() {
+        attesa(false);
+        var networkState = navigator.network.connection.type;
+        var states = {};
+        states[Connection.UNKNOWN]  = 'Unknown connection';
+        states[Connection.ETHERNET] = 'Ethernet connection';
+        states[Connection.WIFI]     = 'WiFi connection';
+        states[Connection.CELL_2G]  = 'Cell 2G connection';
+        states[Connection.CELL_3G]  = 'Cell 3G connection';
+        states[Connection.CELL_4G]  = 'Cell 4G connection';
+        states[Connection.NONE]     = 'No network connection';
+        alert('Connection type: ' + states[networkState]);
     }
 }
 app.intro= function (){
@@ -399,6 +424,7 @@ mappa.onErrorGeo = function(error) {
 }
 
 $(document).ready(function() {
+
     app.initialize();
       if ( CORDOVA ) {
         alert("prova");
@@ -415,5 +441,4 @@ $(document).ready(function() {
       } else {
         URL_PREFIX = "";
       }
-
 });
