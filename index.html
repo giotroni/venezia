@@ -57,8 +57,10 @@
 	    
         </div>
         <div data-role="footer" data-position="fixed">
-	    <div id="nome">nome</div>
-            <button id="btnLogin" >Entra</button>
+	    <div data-role="fieldcontain">
+		<label for="btnLogin" id="lblBtnLogin">nome? </label>
+		<button name = "btnLogin" id="btnLogin" >Entra</button>
+	    </div>
         </div>
 
     </div><!-- /page-home -->
@@ -74,6 +76,7 @@
             </ul>            
             
 	    <button id="btnMap">Mappa</button>            
+	    <button id="btnConnection">Verifica connessione</button>            
         </div>
         <div data-role="footer" data-position="fixed">
             <a href="#page-home" data-role="button" data-icon="arrow-l">Prec</a>

@@ -50,10 +50,10 @@ function messaggio( tit, testo, btn){
   }  
 }
 
-function attesa(valore){
+function attesa(valore, testo){
   if (valore) {
     $.mobile.loading( "show", {
-            text: "Attendere...",
+            text: testo,
             textVisible: true,
             theme: 'z',
             textonly: false,
@@ -90,12 +90,13 @@ var app = {
 
         $("#btnPosition").on("tap", mappa.getPos);
         $("#btnMap").on("tap", app.showMap);
+        $("#btnConnection").on("tap", app.checkConnection);
         $("#btn_enigma").on("tap", app.chek_answer);
 
     },
      
     deviceready: function() {
-        
+      alert("Device Ready");   
         
     }
 }
@@ -121,11 +122,13 @@ app.entra= function (){
   //alert("swipeCopertina");
   //$( '#popupLogin' ).popup( 'close' )
   var utente = $('#un').val().toLowerCase();
-  if (utente.length<4) {
-    messaggio('Attenzione!', 'Nome troppo corto', 'Ok')
+  if (utente.length<4 || utente.length>12 ) {
+    messaggio('Attenzione!', 'Lunghezza nome non corretta (min 4 max 12)', 'Ok')
     return;
   }
-  app.user_data.nome = utente; 
+  app.user_data.nome = utente;
+  $("#lblBtnLogin").html(app.user.data.nome)
+
   $.ajax({
     type: 'GET',
     url: URL_PREFIX +'php/leggi_user.php',
@@ -310,7 +313,7 @@ var mappa = {
   // funzione che inizializza i dati
   // funzione che legge la posizione attuale
   getPos: function(){
-    attesa(true);
+    attesa(true, "Sto cercando la posizione...");
     navigator.geolocation.getCurrentPosition(mappa.onSuccessGeo, mappa.onErrorGeo, { timeout: 30000 });    
   },
   // funzione che disegna la mappa
@@ -416,7 +419,7 @@ var mappa = {
 }
 // chiamata quando la posizione è stata letta
 mappa.onSuccessGeo = function(position){
-  attesa(false);
+  attesa(false,"");
   mappa.defaultLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   mappa.sortPlaces();
   mappa.checkArrivato();
@@ -431,18 +434,18 @@ mappa.onErrorGeo = function(error) {
 
 $(document).ready(function() {
     app.initialize();
-      if ( CORDOVA ) {
-        URL_PREFIX = "http://www.troni.it/venezia/";
-          var value = app.storage.getItem("user");
-          if (value === null) {
-            alert("Non valido");
-          } else {
-            app.user_data = JSON.parse(value);
-            alert(app.user_data.nome + " " + app.user_data.id);
-            $("#nome").html(app.user.data.nome)
-          }
-         
-      } else {
-        URL_PREFIX = "";
-      }
+    if ( CORDOVA ) {
+      URL_PREFIX = "http://www.troni.it/venezia/";
+        var value = app.storage.getItem("user");
+        if (value === null) {
+          alert("Non valido");
+        } else {
+          app.user_data = JSON.parse(value);
+          alert(app.user_data.nome + " " + app.user_data.id);
+          $("#lblBtnLogin").html(app.user.data.nome)
+        }
+       
+    } else {
+      URL_PREFIX = "";
+    }
 });
