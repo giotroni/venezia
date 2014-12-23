@@ -96,8 +96,6 @@ var app = {
     },
      
     deviceready: function() {
-      alert("Device Ready");   
-        
     }
 }
 app.intro= function (){
