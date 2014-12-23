@@ -10,12 +10,6 @@
     <author href="http://www.troni.it" email="giorgio@troni.it">Giorgio Troni</author>
     <icon src="icon.png" gap:role="default" />
 
-    <feature name="http://api.phonegap.com/1.0/network"/>
-    <feature name="http://api.phonegap.com/1.0/geolocation"/>
-
-    <gap:plugin name="org.apache.cordova.network-information" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <gap:plugin name="org.apache.cordova.network-information" version="0.2.12" />
 
 </widget>
