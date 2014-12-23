@@ -13,9 +13,6 @@
     <feature name="http://api.phonegap.com/1.0/network"/>
     <feature name="http://api.phonegap.com/1.0/geolocation"/>
 
-    <preference name="phonegap-version" value="2.0.0" />
-    <preference name="target-device" value="universal" />
-
     <gap:plugin name="org.apache.cordova.network-information" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
