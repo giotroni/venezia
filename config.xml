@@ -10,6 +10,6 @@
     <author href="http://www.troni.it" email="giorgio@troni.it">Giorgio Troni</author>
     <icon src="icon.png" gap:role="default" />
 
-    <gap:plugin name="org.apache.cordova.network-information" version="0.2.12" />
+    <gap:platform name="android" />
 
 </widget>
