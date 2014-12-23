@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget
+    xmlns = "http://www.w3.org/ns/widgets"
+    xmlns:gap = "http://phonegap.com/ns/1.0"
+    id = "it.troni.venicesecrets"
+    version = "1.0.0">
+
+    <name>Venice Secrets</name>
+    <description>con "Venice Secrets" entri nel mondo magico di Venzia, andando alla ricerca dei luoghi nascosti per risolveri gli enigmi di Casanova</description>
+    <author href="http://www.troni.it" email="giorgio@troni.it">Giorgio Troni</author>
+    <icon src="icon.png" gap:role="default" />
+
+    <feature name="http://api.phonegap.com/1.0/network"/>
+    <feature name="http://api.phonegap.com/1.0/geolocation"/>
+
+    <preference name="phonegap-version" value="2.0.0" />
+    <preference name="target-device" value="universal" />
+
+    <gap:plugin name="org.apache.cordova.network-information" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</widget>

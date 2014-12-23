@@ -321,6 +321,13 @@ var mappa = {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+    $.each(mappa.luoghi, function(key, value){
+      var newMarker = new google.maps.Marker({
+        position: new google.maps.LatLng(value.lat,value.lon),
+        map: map,
+        title: value.descrizione
+      });
+    });
     // Add an overlay to the map of current lat/lng
     var marker = new google.maps.Marker({
       position: latlng,
@@ -328,13 +335,7 @@ var mappa = {
       icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-pushpin.png',
       title: "Your're here!"
     });
-    $.each(mappa.luoghi, function(key, value){
-      var newMarker = new google.maps.Marker({
-        position: new google.maps.LatLng(value.lat,value.lon),
-        map: map,
-        title: value.descrizione
-      });
-    })        
+
   },
   // aggiorna la lista dei mappa.luoghi, ordinandola sulla base della distanza
   sortPlaces: function(){
