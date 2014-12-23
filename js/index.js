@@ -106,7 +106,6 @@ app.introClose= function (){
 }
 
 app.login= function (){
-  app.checkConnection();
   alert(app.user_data.nome + " " + app.user_data.id);
   if ( app.user_data.nome!="") {
     app.entra_pagina();
