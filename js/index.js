@@ -41,7 +41,8 @@ function alertDummy(){
 
 function messaggio( tit, testo, btn){
   if ( CORDOVA ) {
-    navigator.notification.alert(testo, alertDummy)
+    alert(tit+ " " + testo);
+    //navigator.notification.alert(testo, alertDummy)
       //tit,
       //btn
       //);
