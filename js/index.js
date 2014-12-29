@@ -126,7 +126,7 @@ app.entra= function (){
     messaggio('Attenzione!', 'Lunghezza nome non corretta (min 4 max 12)', 'Ok');
     return;
   }
-
+  alert(URL_PREFIX +'php/leggi_user.php');
   $.ajax({
     type: 'GET',
     url: URL_PREFIX +'php/leggi_user.php',
