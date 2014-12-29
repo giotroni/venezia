@@ -126,8 +126,6 @@ app.entra= function (){
     messaggio('Attenzione!', 'Lunghezza nome non corretta (min 4 max 12)', 'Ok');
     return;
   }
-  app.user_data.nome = utente;
-  $("#lblBtnLogin").html(app.user.data.nome);
 
   $.ajax({
     type: 'GET',
@@ -138,8 +136,11 @@ app.entra= function (){
       },
     cache: false
   }).done(function(result) {
+    app.user_data.nome = utente;
     app.user_data.id = result*1;
     app.storage.setItem("user", JSON.stringify(app.user_data));
+    alert("Utente: " + app.user.data.nome + " inserito")
+    $("#lblBtnLogin").html(app.user.data.nome);
     //alert(app.user_data.nome + " " + app.user_data.id);
   }).fail(function(){
     messaggio('Attenzione!', 'Problema di connessione', 'Ok')
