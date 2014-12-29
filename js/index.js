@@ -105,7 +105,7 @@ app.intro= function (){
 app.introClose= function (){
   $( '#popupIntro' ).popup( 'close' )
 }
-// si logga, se l'tente è memorizzato, altrimenti esce il pop p per la registrazione
+// si logga, se l'utente è memorizzato, altrimenti esce il pop p per la registrazione
 app.login= function (){
   alert(app.user_data.nome + " " + app.user_data.id);
   if ( app.user_data.nome!="") {
@@ -120,8 +120,9 @@ app.entra= function (){
   //alert("swipeCopertina");
   //$( '#popupLogin' ).popup( 'close' )
   var utente = $('#un').val().toLowerCase();
+  alert(utente );
   if (utente.length<4 || utente.length>12 ) {
-    messaggio('Attenzione!', 'Lunghezza nome non corretta (min 4 max 12)', 'Ok')
+    messaggio('Attenzione!', 'Lunghezza nome non corretta (min 4 max 12)', 'Ok');
     return;
   }
   app.user_data.nome = utente;
