@@ -55,7 +55,7 @@ function attesa(valore, testo){
     $.mobile.loading( "show", {
             text: testo,
             textVisible: true,
-            theme: 'z',
+            theme: 'b',
             textonly: false,
             html: ""
     });
@@ -98,13 +98,14 @@ var app = {
     deviceready: function() {
     }
 }
+// Apre e chiude il pop p con la richiesta dello username
 app.intro= function (){
   $( '#popupIntro' ).popup( 'open' )
 }
 app.introClose= function (){
   $( '#popupIntro' ).popup( 'close' )
 }
-
+// si logga, se l'tente è memorizzato, altrimenti esce il pop p per la registrazione
 app.login= function (){
   alert(app.user_data.nome + " " + app.user_data.id);
   if ( app.user_data.nome!="") {
@@ -114,7 +115,7 @@ app.login= function (){
     $( '#popupLogin' ).popup( 'open' )
   }
 }
-// 
+// gestisce l'inserimento del nome
 app.entra= function (){
   //alert("swipeCopertina");
   //$( '#popupLogin' ).popup( 'close' )
@@ -124,7 +125,7 @@ app.entra= function (){
     return;
   }
   app.user_data.nome = utente;
-  $("#lblBtnLogin").html(app.user.data.nome)
+  $("#lblBtnLogin").html(app.user.data.nome);
 
   $.ajax({
     type: 'GET',
@@ -440,7 +441,7 @@ $(document).ready(function() {
         } else {
           app.user_data = JSON.parse(value);
           alert(app.user_data.nome + " " + app.user_data.id);
-          $("#lblBtnLogin").html(app.user.data.nome)
+          $("#lblBtnLogin").html(app.user.data.nome);
         }
        
     } else {
